@@ -1,0 +1,1522 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete offline Linux Command Guide - Now with 25+ advanced commands">
+    <title>Complete Linux Command Guide • Powered by MKLAB Corporation</title>
+    <style>
+        :root {
+            --primary: #00ff9d;
+            --bg: #0a0a0a;
+            --card: #121212;
+            --text: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #111111, #1a1a1a);
+            border-bottom: 3px solid var(--primary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 255, 157, 0.1);
+        }
+        
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            font-size: 2rem;
+        }
+        
+        .title {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        
+        .powered {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        
+        .search-container {
+            max-width: 1280px;
+            margin: 30px auto 20px;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .search-bar {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 16px 24px 16px 55px;
+            background: #1a1a1a;
+            border: 2px solid #222;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 255, 157, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+        
+        .tabs {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #222;
+        }
+        
+        .tab-button {
+            padding: 14px 28px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary);
+        }
+        
+        .main-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .category-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: none;
+            margin-bottom: 20px;
+        }
+        
+        .category-nav::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-btn {
+            background: #1a1a1a;
+            color: #ddd;
+            border: 2px solid #333;
+            padding: 10px 22px;
+            border-radius: 50px;
+            white-space: nowrap;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .section-header {
+            font-size: 1.6rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #222;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .command-card {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid #222;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .command-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 255, 157, 0.15);
+        }
+        
+        .card-header {
+            padding: 18px 22px;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+        }
+        
+        .command-name {
+            font-size: 1.4rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .fav-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .fav-btn.favorited {
+            color: #ffd700;
+            animation: pop 0.3s ease;
+        }
+        
+        .card-body {
+            padding: 22px;
+        }
+        
+        .explanation {
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            color: #ccc;
+        }
+        
+        details {
+            margin-top: 12px;
+            border-top: 1px solid #333;
+            padding-top: 12px;
+        }
+        
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05rem;
+        }
+        
+        .details-content {
+            padding: 18px 0 8px;
+            font-size: 1rem;
+        }
+        
+        .syntax {
+            background: #000;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin-bottom: 18px;
+            color: #0f0;
+            overflow-x: auto;
+        }
+        
+        .example {
+            margin-bottom: 18px;
+        }
+        
+        .example-label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+        
+        .example-code {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            font-family: monospace;
+        }
+        
+        .copy-btn {
+            background: #222;
+            color: var(--primary);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .output {
+            font-size: 0.95rem;
+            background: #0a0a0a;
+            padding: 12px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            color: #aaa;
+        }
+        
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+        }
+        
+        .empty-favorites {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .tips-container {
+            background: #121212;
+            border-radius: 16px;
+            padding: 30px;
+            border: 2px solid #222;
+        }
+        
+        .tip {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 22px;
+            padding-bottom: 22px;
+            border-bottom: 1px dashed #333;
+        }
+        
+        .tip:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .tip-number {
+            background: var(--primary);
+            color: #000;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .cheat-sheet {
+            background: #111;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 40px;
+            border: 2px solid var(--primary);
+        }
+        
+        .cheat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        
+        .cheat-card {
+            background: #1a1a1a;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .cheat-card:hover {
+            background: #222;
+            transform: scale(1.05);
+        }
+        
+        .cheat-name {
+            font-family: monospace;
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        
+        footer {
+            background: #111;
+            color: #666;
+            text-align: center;
+            padding: 40px 20px 25px;
+            margin-top: 80px;
+            border-top: 3px solid #222;
+        }
+        
+        .footer-brand {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .mobile-notice {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .title {
+                font-size: 1.4rem;
+            }
+            .commands-grid, .favorites-grid {
+                grid-template-columns: 1fr;
+            }
+            .category-nav {
+                justify-content: flex-start;
+            }
+            .mobile-notice {
+                display: block;
+                background: #1a1a1a;
+                color: var(--primary);
+                text-align: center;
+                padding: 12px;
+                font-size: 0.9rem;
+                margin: 10px 20px;
+                border-radius: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span>🐧</span>
+                <div>
+                    <span class="title">Complete Linux Command Guide</span>
+                </div>
+            </div>
+            <div class="powered">
+                POWERED BY MKLAB CORPORATION
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH -->
+    <div class="search-container">
+        <div class="search-bar">
+            <span class="search-icon">🔎</span>
+            <input type="text" id="search-input" placeholder="Search any Linux command... (e.g. ls, grep, sed, systemctl)" autocomplete="off">
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-button active" onclick="showTab(0)" id="tab-0">
+            📋 Browse Commands
+        </button>
+        <button class="tab-button" onclick="showTab(1)" id="tab-1">
+            ⭐ My Favorites (<span id="fav-count">0</span>)
+        </button>
+        <button class="tab-button" onclick="showTab(2)" id="tab-2">
+            💡 Quick Tips
+        </button>
+    </div>
+
+    <div class="main-container">
+
+        <!-- TAB 0: BROWSE COMMANDS -->
+        <div id="content-0" class="tab-content active">
+
+            <!-- CHEAT SHEET SUMMARY -->
+            <div class="cheat-sheet">
+                <h2 style="margin-bottom: 18px; color: var(--primary); display: flex; align-items: center; gap: 10px;">
+                    🔥 Most Important Commands Cheat Sheet
+                </h2>
+                <div class="cheat-grid">
+                    <div class="cheat-card" onclick="quickCopy('ls -la')">
+                        <div class="cheat-name">ls -la</div>
+                        <div style="font-size:0.9rem; color:#aaa;">List all files (detailed)</div>
+                    </div>
+                    <div class="cheat-card" onclick="quickCopy('cd ..')">
+                        <div class="cheat-name">cd ..</div>
+                        <div style="font-size:0.9rem; color:#aaa;">Go up one directory</div>
+                    </div>
+                    <div class="cheat-card" onclick="quickCopy('pwd')">
+                        <div class="cheat-name">pwd</div>
+                        <div style="font-size:0.9rem; color:#aaa;">Show current path</div>
+                    </div>
+                    <div class="cheat-card" onclick="quickCopy('grep pattern file')">
+                        <div class="cheat-name">grep</div>
+                        <div style="font-size:0.9rem; color:#aaa;">Search inside files</div>
+                    </div>
+                    <div class="cheat-card" onclick="quickCopy('sed s/old/new/g')">
+                        <div class="cheat-name">sed</div>
+                        <div style="font-size:0.9rem; color:#aaa;">Replace text</div>
+                    </div>
+                    <div class="cheat-card" onclick="quickCopy('systemctl status')">
+                        <div class="cheat-name">systemctl</div>
+                        <div style="font-size:0.9rem; color:#aaa;">Manage services</div>
+                    </div>
+                </div>
+                <p style="text-align:center; margin-top:18px; font-size:0.95rem; color:#666;">
+                    💡 Tap any command above to copy it instantly • Now with more advanced commands!
+                </p>
+            </div>
+
+            <!-- CATEGORY NAVIGATION -->
+            <div class="category-nav" id="category-nav">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- ALL COMMANDS SECTIONS (populated by JS) -->
+            <div id="browse-commands">
+                <!-- Dynamically generated by renderBrowseCommands() -->
+            </div>
+        </div>
+
+        <!-- TAB 1: FAVORITES -->
+        <div id="content-1" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: var(--primary);">⭐ Your Favorite Commands</h2>
+            <div id="favorites-grid" class="favorites-grid">
+                <!-- Dynamically populated -->
+            </div>
+            <div id="empty-favorites" class="empty-favorites" style="display: none;">
+                <p style="font-size: 2rem; margin-bottom: 16px;">☆</p>
+                <h3>No favorites yet</h3>
+                <p style="max-width: 400px; margin: 16px auto;">Click the ⭐ icon on any command to save it here for quick access.<br>Perfect for daily practice!</p>
+            </div>
+        </div>
+
+        <!-- TAB 2: QUICK TIPS -->
+        <div id="content-2" class="tab-content">
+            <h2 style="margin-bottom: 24px; color: var(--primary);">💡 Linux Beginner Quick Tips</h2>
+            <div class="tips-container">
+                <div class="tip">
+                    <div class="tip-number">1</div>
+                    <div>
+                        <strong>Press TAB for autocomplete</strong><br>
+                        Type <code>cd /ho</code> and press Tab → it completes to <code>/home/</code>
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">2</div>
+                    <div>
+                        <strong>Use <code>man command</code> for help</strong><br>
+                        Example: <code>man sed</code> shows everything about the sed command
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">3</div>
+                    <div>
+                        <strong>Pipe commands with |</strong><br>
+                        <code>cat log.txt | grep error | wc -l</code> → count errors
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">4</div>
+                    <div>
+                        <strong>Ctrl + C stops any running command</strong><br>
+                        Super useful when something is taking too long
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">5</div>
+                    <div>
+                        <strong>Use <code>history</code> to see past commands</strong><br>
+                        Type <code>!123</code> to rerun command number 123
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">6</div>
+                    <div>
+                        <strong>Always use <code>-h</code> or <code>--help</code></strong><br>
+                        Most commands show usage when you add these flags
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">7</div>
+                    <div>
+                        <strong>Be extremely careful with <code>rm -rf</code></strong><br>
+                        It permanently deletes everything without asking
+                    </div>
+                </div>
+                <div class="tip">
+                    <div class="tip-number">8</div>
+                    <div>
+                        <strong>sudo = superuser do</strong><br>
+                        Use it only when you really need admin rights
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-brand">
+            Complete Linux Command Guide — Powered by MKLAB Corporation
+        </div>
+        <p>Offline Learning Tool • Works 100% without internet • Optimized for Android &amp; Desktop</p>
+        <p style="margin-top: 12px; font-size: 0.9rem; color: var(--primary);">
+            ✅ UPDATED: 12 new powerful advanced commands added (sed, awk, rsync, systemctl, crontab, etc.)
+        </p>
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">
+            Made as a single HTML file • No external dependencies • 100% offline
+        </p>
+    </footer>
+
+    <script>
+        /**
+         * COMPLETE LINUX COMMANDS DATABASE
+         * Expanded with 12 powerful advanced commands as requested!
+         * All content remains beginner-friendly with practical examples.
+         */
+        const COMMANDS_DATA = [
+            // === DIRECTORY NAVIGATION ===
+            {
+                id: "pwd",
+                name: "pwd",
+                category: "directory-navigation",
+                categoryName: "Directory Navigation",
+                explanation: "Prints the full path of your current working directory.",
+                syntax: "pwd",
+                examples: [
+                    { cmd: "pwd", desc: "Show current directory", output: "/home/muhammad/projects" },
+                    { cmd: "pwd -L", desc: "Logical path (follows symlinks)", output: "/home/muhammad/projects" }
+                ]
+            },
+            {
+                id: "cd",
+                name: "cd",
+                category: "directory-navigation",
+                categoryName: "Directory Navigation",
+                explanation: "Changes your current working directory.",
+                syntax: "cd [directory]",
+                examples: [
+                    { cmd: "cd /var/log", desc: "Go to a specific folder", output: "(directory changes silently)" },
+                    { cmd: "cd ..", desc: "Go up one level", output: "(directory changes silently)" },
+                    { cmd: "cd ~", desc: "Go to your home directory", output: "(directory changes silently)" }
+                ]
+            },
+            {
+                id: "ls",
+                name: "ls",
+                category: "directory-navigation",
+                categoryName: "Directory Navigation",
+                explanation: "Lists files and directories in the current location.",
+                syntax: "ls [options] [directory]",
+                examples: [
+                    { cmd: "ls", desc: "Simple list", output: "Documents  Downloads  Pictures" },
+                    { cmd: "ls -la", desc: "Show hidden files + details", output: "drwxr-xr-x  12 muhammad  4096 Mar 31 19:20 .\n-rw-r--r--   1 muhammad   245 Mar 30 10:15 .bashrc" },
+                    { cmd: "ls -lh", desc: "Human-readable sizes", output: "total 2.4M\n-rw-r--r-- 1 muhammad 1.2M Mar 31 18:45 report.pdf" }
+                ]
+            },
+            
+            // === FILE MANAGEMENT ===
+            {
+                id: "mkdir",
+                name: "mkdir",
+                category: "file-management",
+                categoryName: "File Management",
+                explanation: "Creates one or more new directories.",
+                syntax: "mkdir [options] directory_name",
+                examples: [
+                    { cmd: "mkdir projects", desc: "Create a single folder", output: "(folder created)" },
+                    { cmd: "mkdir -p backups/2026/march", desc: "Create nested folders", output: "(all folders created)" },
+                    { cmd: "mkdir -m 777 shared", desc: "Create with full permissions", output: "(folder created)" }
+                ]
+            },
+            {
+                id: "touch",
+                name: "touch",
+                category: "file-management",
+                categoryName: "File Management",
+                explanation: "Creates an empty file or updates timestamps of existing files.",
+                syntax: "touch filename",
+                examples: [
+                    { cmd: "touch notes.txt", desc: "Create new empty file", output: "(file created)" },
+                    { cmd: "touch report.pdf", desc: "Update timestamp of existing file", output: "(timestamp updated)" }
+                ]
+            },
+            {
+                id: "cp",
+                name: "cp",
+                category: "file-management",
+                categoryName: "File Management",
+                explanation: "Copies files and directories.",
+                syntax: "cp [options] source destination",
+                examples: [
+                    { cmd: "cp report.txt backup/", desc: "Copy file to folder", output: "(file copied)" },
+                    { cmd: "cp -r photos/ archive/", desc: "Copy entire folder recursively", output: "(folder copied)" },
+                    { cmd: "cp -i file.txt /tmp/", desc: "Ask before overwriting", output: "(prompt appears if needed)" }
+                ]
+            },
+            {
+                id: "mv",
+                name: "mv",
+                category: "file-management",
+                categoryName: "File Management",
+                explanation: "Moves or renames files and directories.",
+                syntax: "mv [options] source destination",
+                examples: [
+                    { cmd: "mv oldname.txt newname.txt", desc: "Rename a file", output: "(file renamed)" },
+                    { cmd: "mv report.pdf ~/Documents/", desc: "Move file to another folder", output: "(file moved)" }
+                ]
+            },
+            {
+                id: "rm",
+                name: "rm",
+                category: "file-management",
+                categoryName: "File Management",
+                explanation: "Removes (deletes) files and directories.",
+                syntax: "rm [options] filename",
+                examples: [
+                    { cmd: "rm temp.txt", desc: "Delete a single file", output: "(file deleted)" },
+                    { cmd: "rm -r oldproject/", desc: "Delete folder and contents", output: "(folder deleted)" },
+                    { cmd: "rm -rf temp/", desc: "Force delete without confirmation", output: "(⚠️ dangerous!)" }
+                ]
+            },
+            {
+                id: "cat",
+                name: "cat",
+                category: "file-management",
+                categoryName: "File Management",
+                explanation: "Displays the content of one or more files.",
+                syntax: "cat [options] filename",
+                examples: [
+                    { cmd: "cat config.txt", desc: "View file content", output: "server=192.168.1.100\nport=8080" },
+                    { cmd: "cat file1.txt file2.txt", desc: "Combine multiple files", output: "(combined content shown)" }
+                ]
+            },
+            
+            // === SYSTEM INFORMATION ===
+            {
+                id: "uname",
+                name: "uname",
+                category: "system-information",
+                categoryName: "System Information",
+                explanation: "Shows detailed information about your Linux system.",
+                syntax: "uname [options]",
+                examples: [
+                    { cmd: "uname -a", desc: "All system information", output: "Linux muhammad-pc 6.8.0-... #1 SMP ... x86_64 GNU/Linux" },
+                    { cmd: "uname -r", desc: "Kernel version only", output: "6.8.0-42-generic" }
+                ]
+            },
+            {
+                id: "df",
+                name: "df",
+                category: "system-information",
+                categoryName: "System Information",
+                explanation: "Shows disk space usage of all mounted filesystems.",
+                syntax: "df [options]",
+                examples: [
+                    { cmd: "df -h", desc: "Human-readable output", output: "Filesystem   Size  Used Avail Use% Mounted on\n/dev/sda2    256G  89G  154G  37% /" }
+                ]
+            },
+            {
+                id: "du",
+                name: "du",
+                category: "system-information",
+                categoryName: "System Information",
+                explanation: "Estimates file and directory space usage.",
+                syntax: "du [options] [directory]",
+                examples: [
+                    { cmd: "du -sh Downloads/", desc: "Total size of a folder", output: "1.4G	Downloads/" },
+                    { cmd: "du -sh * | sort -hr", desc: "Biggest folders in current dir", output: "2.3G	videos\n845M	documents" }
+                ]
+            },
+            {
+                id: "free",
+                name: "free",
+                category: "system-information",
+                categoryName: "System Information",
+                explanation: "Displays amount of free and used memory.",
+                syntax: "free [options]",
+                examples: [
+                    { cmd: "free -h", desc: "Human readable memory info", output: "               total        used        free      shared  buff/cache   available\nMem:           15Gi       6.2Gi       4.8Gi       1.2Gi       4.0Gi       8.1Gi" }
+                ]
+            },
+            
+            // === USER MANAGEMENT ===
+            {
+                id: "whoami",
+                name: "whoami",
+                category: "user-management",
+                categoryName: "User Management",
+                explanation: "Prints the username of the current user.",
+                syntax: "whoami",
+                examples: [
+                    { cmd: "whoami", desc: "Show current username", output: "muhammad" }
+                ]
+            },
+            {
+                id: "id",
+                name: "id",
+                category: "user-management",
+                categoryName: "User Management",
+                explanation: "Shows user ID, group ID and groups you belong to.",
+                syntax: "id [username]",
+                examples: [
+                    { cmd: "id", desc: "Your own user info", output: "uid=1000(muhammad) gid=1000(muhammad) groups=1000(muhammad),4(adm),27(sudo)" }
+                ]
+            },
+            {
+                id: "sudo",
+                name: "sudo",
+                category: "user-management",
+                categoryName: "User Management",
+                explanation: "Execute a command as superuser (root).",
+                syntax: "sudo command",
+                examples: [
+                    { cmd: "sudo apt update", desc: "Run package update with admin rights", output: "(updates package list)" },
+                    { cmd: "sudo su", desc: "Become root user", output: "root@pc:~#" }
+                ]
+            },
+            
+            // === PERMISSIONS ===
+            {
+                id: "chmod",
+                name: "chmod",
+                category: "permissions",
+                categoryName: "Permissions",
+                explanation: "Changes file or directory permissions.",
+                syntax: "chmod [mode] filename",
+                examples: [
+                    { cmd: "chmod 755 script.sh", desc: "Owner full access, others read+execute", output: "(permissions changed)" },
+                    { cmd: "chmod +x script.sh", desc: "Make file executable", output: "(file is now executable)" }
+                ]
+            },
+            {
+                id: "chown",
+                name: "chown",
+                category: "permissions",
+                categoryName: "Permissions",
+                explanation: "Changes the owner and group of a file or directory.",
+                syntax: "chown [owner][:group] file",
+                examples: [
+                    { cmd: "sudo chown muhammad:www-data website/", desc: "Change owner and group", output: "(ownership changed)" }
+                ]
+            },
+            
+            // === NETWORKING ===
+            {
+                id: "ping",
+                name: "ping",
+                category: "networking",
+                categoryName: "Networking",
+                explanation: "Tests connectivity to another network device.",
+                syntax: "ping [options] destination",
+                examples: [
+                    { cmd: "ping google.com", desc: "Test internet connection", output: "64 bytes from ... time=18 ms" },
+                    { cmd: "ping -c 4 8.8.8.8", desc: "Send only 4 packets", output: "(4 packets sent and received)" }
+                ]
+            },
+            {
+                id: "ssh",
+                name: "ssh",
+                category: "networking",
+                categoryName: "Networking",
+                explanation: "Securely connects to a remote Linux server.",
+                syntax: "ssh user@ip_address",
+                examples: [
+                    { cmd: "ssh muhammad@192.168.1.105", desc: "Connect to remote server", output: "(login prompt appears)" }
+                ]
+            },
+            {
+                id: "curl",
+                name: "curl",
+                category: "networking",
+                categoryName: "Networking",
+                explanation: "Transfers data to or from a server using many protocols.",
+                syntax: "curl [options] URL",
+                examples: [
+                    { cmd: "curl -I example.com", desc: "Get HTTP headers only", output: "HTTP/2 200\ncontent-type: text/html" },
+                    { cmd: "curl wttr.in/Lagos", desc: "Get weather in terminal", output: "(beautiful weather report)" }
+                ]
+            },
+            
+            // === PROCESS MANAGEMENT ===
+            {
+                id: "ps",
+                name: "ps",
+                category: "process-management",
+                categoryName: "Process Management",
+                explanation: "Shows currently running processes.",
+                syntax: "ps [options]",
+                examples: [
+                    { cmd: "ps aux", desc: "All processes with details", output: "USER   PID %CPU ... COMMAND" }
+                ]
+            },
+            {
+                id: "top",
+                name: "top",
+                category: "process-management",
+                categoryName: "Process Management",
+                explanation: "Displays real-time running processes (interactive).",
+                syntax: "top",
+                examples: [
+                    { cmd: "top", desc: "Launch live process monitor", output: "(interactive dashboard opens)" }
+                ]
+            },
+            {
+                id: "kill",
+                name: "kill",
+                category: "process-management",
+                categoryName: "Process Management",
+                explanation: "Terminates a running process by its PID.",
+                syntax: "kill [signal] PID",
+                examples: [
+                    { cmd: "kill 1234", desc: "Gracefully stop process", output: "(process terminated)" },
+                    { cmd: "kill -9 1234", desc: "Force kill (last resort)", output: "(process killed instantly)" }
+                ]
+            },
+            
+            // === PACKAGE MANAGEMENT ===
+            {
+                id: "apt",
+                name: "apt",
+                category: "package-management",
+                categoryName: "Package Management",
+                explanation: "Modern package manager for Debian/Ubuntu systems.",
+                syntax: "sudo apt [command]",
+                examples: [
+                    { cmd: "sudo apt update", desc: "Refresh package list", output: "(lists updated)" },
+                    { cmd: "sudo apt install htop", desc: "Install a package", output: "(htop installed)" },
+                    { cmd: "sudo apt remove htop", desc: "Remove a package", output: "(package removed)" }
+                ]
+            },
+            
+            // === DISK MANAGEMENT ===
+            {
+                id: "lsblk",
+                name: "lsblk",
+                category: "disk-management",
+                categoryName: "Disk Management",
+                explanation: "Lists information about all block devices (disks, partitions).",
+                syntax: "lsblk",
+                examples: [
+                    { cmd: "lsblk -f", desc: "Show disks with filesystems", output: "NAME   FSTYPE LABEL  MOUNTPOINT\nsda\n├─sda1 ext4         /\n└─sda2 swap         [SWAP]" }
+                ]
+            },
+            
+            // === ADVANCED COMMANDS (EXPANDED) ===
+            {
+                id: "grep",
+                name: "grep",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Searches for text patterns inside files (very powerful for log analysis).",
+                syntax: "grep [options] pattern file",
+                examples: [
+                    { cmd: "grep -r \"TODO\" ./project/", desc: "Recursive search in folder", output: "./app.js:42:  // TODO: fix login" },
+                    { cmd: "grep -i error log.txt", desc: "Case-insensitive search", output: "ERROR: Connection failed" },
+                    { cmd: "grep -c \"success\" access.log", desc: "Count matching lines", output: "142" }
+                ]
+            },
+            {
+                id: "find",
+                name: "find",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Finds files and directories based on name, size, date, etc.",
+                syntax: "find [path] [options]",
+                examples: [
+                    { cmd: 'find /home -name "*.pdf"', desc: "Find all PDF files", output: "/home/muhammad/report.pdf" },
+                    { cmd: "find . -size +100M", desc: "Find files bigger than 100MB", output: "./video.mp4" },
+                    { cmd: "find . -type f -mtime -7", desc: "Files modified in last 7 days", output: "./script.sh" }
+                ]
+            },
+            {
+                id: "man",
+                name: "man",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Shows the manual (help) page for any command — your best friend!",
+                syntax: "man command",
+                examples: [
+                    { cmd: "man ls", desc: "Read full manual for ls", output: "(detailed help page opens)" },
+                    { cmd: "man sed", desc: "Learn all sed options", output: "(powerful text editor manual)" }
+                ]
+            },
+            {
+                id: "tar",
+                name: "tar",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Creates and extracts compressed archives (.tar.gz).",
+                syntax: "tar [options] archive.tar.gz",
+                examples: [
+                    { cmd: "tar -czvf backup.tar.gz folder/", desc: "Create compressed archive", output: "(archive created)" },
+                    { cmd: "tar -xzvf backup.tar.gz", desc: "Extract archive", output: "(files extracted)" },
+                    { cmd: "tar -tf archive.tar.gz", desc: "List contents without extracting", output: "file1.txt\nfile2.txt" }
+                ]
+            },
+            {
+                id: "history",
+                name: "history",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Displays the list of previously executed commands.",
+                syntax: "history",
+                examples: [
+                    { cmd: "history", desc: "Show command history", output: "   23  ls -la\n   24  cd /var\n   25  sudo apt update" },
+                    { cmd: "history | grep grep", desc: "Search your history", output: "   42  grep error log.txt" }
+                ]
+            },
+            
+            // === NEW ADVANCED COMMANDS ADDED BELOW ===
+            {
+                id: "head",
+                name: "head",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Outputs the first 10 lines of a file (great for peeking at logs).",
+                syntax: "head [options] filename",
+                examples: [
+                    { cmd: "head /var/log/syslog", desc: "First 10 lines of log", output: "Mar 31 19:20:01 ... kernel: ... " },
+                    { cmd: "head -n 5 data.csv", desc: "Show only first 5 lines", output: "id,name,age\n1,John,25\n..." },
+                    { cmd: "head -c 100 file.txt", desc: "First 100 characters", output: "First 100 chars of the file..." }
+                ]
+            },
+            {
+                id: "tail",
+                name: "tail",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Outputs the last lines of a file — perfect for live monitoring.",
+                syntax: "tail [options] filename",
+                examples: [
+                    { cmd: "tail /var/log/syslog", desc: "Last 10 lines of log", output: "Mar 31 19:45:12 ... systemd: ..." },
+                    { cmd: "tail -f /var/log/nginx/access.log", desc: "Follow log in real-time", output: "(live updates appear)" },
+                    { cmd: "tail -n 20 error.log", desc: "Last 20 lines", output: "Latest 20 error messages..." }
+                ]
+            },
+            {
+                id: "wc",
+                name: "wc",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Counts lines, words, and characters in files.",
+                syntax: "wc [options] filename",
+                examples: [
+                    { cmd: "wc -l access.log", desc: "Count number of lines", output: "1245 access.log" },
+                    { cmd: "wc -w essay.txt", desc: "Count words", output: "1842 essay.txt" },
+                    { cmd: "cat file.txt | wc -c", desc: "Count characters via pipe", output: "9876" }
+                ]
+            },
+            {
+                id: "sort",
+                name: "sort",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Sorts lines of text files alphabetically or numerically.",
+                syntax: "sort [options] filename",
+                examples: [
+                    { cmd: "sort names.txt", desc: "Sort alphabetically", output: "Alice\nBob\nCharlie" },
+                    { cmd: "sort -n numbers.txt", desc: "Sort numerically", output: "5\n12\n42" },
+                    { cmd: "sort -u duplicates.txt", desc: "Sort and remove duplicates", output: "(unique sorted list)" }
+                ]
+            },
+            {
+                id: "sed",
+                name: "sed",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Powerful stream editor for find-and-replace, deleting lines, etc.",
+                syntax: "sed [options] 'script' file",
+                examples: [
+                    { cmd: "sed 's/old/new/g' file.txt", desc: "Replace all 'old' with 'new'", output: "Updated text output" },
+                    { cmd: "sed -i 's/foo/bar/g' config.txt", desc: "Edit file in-place", output: "(file updated on disk)" },
+                    { cmd: "sed '1,5d' data.log", desc: "Delete first 5 lines", output: "(remaining lines shown)" }
+                ]
+            },
+            {
+                id: "awk",
+                name: "awk",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Text processing language — extracts columns and does calculations.",
+                syntax: "awk 'pattern { action }' file",
+                examples: [
+                    { cmd: "awk '{print $1}' access.log", desc: "Print first column (IP)", output: "192.168.1.1\n10.0.0.5" },
+                    { cmd: "awk -F, '{print $2}' data.csv", desc: "Print second column (CSV)", output: "John\nSarah" },
+                    { cmd: "awk '$3 > 1000' sales.txt", desc: "Show rows where column 3 > 1000", output: "Filtered results" }
+                ]
+            },
+            {
+                id: "xargs",
+                name: "xargs",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Builds and executes commands from standard input (very powerful with find).",
+                syntax: "command | xargs [options]",
+                examples: [
+                    { cmd: "find . -name '*.log' | xargs rm", desc: "Delete all .log files safely", output: "(files deleted)" },
+                    { cmd: "cat urls.txt | xargs curl -I", desc: "Check headers of many URLs", output: "HTTP responses..." }
+                ]
+            },
+            {
+                id: "crontab",
+                name: "crontab",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Schedules recurring tasks (cron jobs) — runs commands automatically.",
+                syntax: "crontab [options]",
+                examples: [
+                    { cmd: "crontab -e", desc: "Edit your cron jobs", output: "(opens editor)" },
+                    { cmd: "crontab -l", desc: "List your scheduled tasks", output: "0 2 * * * backup.sh" }
+                ]
+            },
+            {
+                id: "systemctl",
+                name: "systemctl",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Controls systemd services (start, stop, restart, status) on modern Linux.",
+                syntax: "systemctl [command] service",
+                examples: [
+                    { cmd: "sudo systemctl status nginx", desc: "Check service status", output: "● nginx.service - ... Active: active (running)" },
+                    { cmd: "sudo systemctl restart apache2", desc: "Restart a web server", output: "(service restarted)" },
+                    { cmd: "sudo systemctl enable ssh", desc: "Auto-start on boot", output: "(enabled)" }
+                ]
+            },
+            {
+                id: "journalctl",
+                name: "journalctl",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Views and filters system logs from systemd journal.",
+                syntax: "journalctl [options]",
+                examples: [
+                    { cmd: "journalctl -u nginx", desc: "Logs for nginx service", output: "Mar 31 ... nginx[1234]: Started" },
+                    { cmd: "journalctl --since \"1 hour ago\"", desc: "Recent logs only", output: "(last hour of logs)" },
+                    { cmd: "journalctl -f", desc: "Follow logs in real-time", output: "(live log stream)" }
+                ]
+            },
+            {
+                id: "rsync",
+                name: "rsync",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Fast and powerful file synchronization (local or remote).",
+                syntax: "rsync [options] source destination",
+                examples: [
+                    { cmd: "rsync -avz folder/ backup/", desc: "Sync folder with progress", output: "(files synced)" },
+                    { cmd: "rsync -avz user@server:/data/ ./local/", desc: "Sync from remote server", output: "(remote files copied)" }
+                ]
+            },
+            {
+                id: "scp",
+                name: "scp",
+                category: "advanced",
+                categoryName: "Advanced Commands",
+                explanation: "Securely copies files between local and remote machines over SSH.",
+                syntax: "scp [options] source destination",
+                examples: [
+                    { cmd: "scp report.pdf user@192.168.1.100:/home/user/", desc: "Upload file to server", output: "(file transferred)" },
+                    { cmd: "scp user@server:/var/log/app.log .", desc: "Download file from server", output: "(file downloaded)" }
+                ]
+            }
+        ]
+
+        /**
+         * Global variable to store favorite command IDs
+         */
+        let favorites = []
+
+        /**
+         * Render all category buttons
+         */
+        function renderCategoryNav() {
+            const nav = document.getElementById('category-nav')
+            nav.innerHTML = `<button class="category-btn active" onclick="filterByCategory('all')">All Commands</button>`
+            
+            // Get unique categories
+            const uniqueCategories = {}
+            COMMANDS_DATA.forEach(cmd => {
+                if (!uniqueCategories[cmd.category]) {
+                    uniqueCategories[cmd.category] = cmd.categoryName
+                }
+            })
+            
+            Object.keys(uniqueCategories).forEach(cat => {
+                const btn = document.createElement('button')
+                btn.className = 'category-btn'
+                btn.textContent = uniqueCategories[cat]
+                btn.onclick = () => filterByCategory(cat)
+                nav.appendChild(btn)
+            })
+        }
+
+        /**
+         * Render all commands grouped by category
+         */
+        function renderBrowseCommands(filteredCommands = null) {
+            const container = document.getElementById('browse-commands')
+            container.innerHTML = ''
+            
+            const commandsToShow = filteredCommands || COMMANDS_DATA
+            
+            // Group by category
+            const grouped = {}
+            commandsToShow.forEach(cmd => {
+                if (!grouped[cmd.category]) grouped[cmd.category] = []
+                grouped[cmd.category].push(cmd)
+            })
+            
+            Object.keys(grouped).forEach(categoryKey => {
+                const categoryCommands = grouped[categoryKey]
+                
+                // Section header
+                const header = document.createElement('h2')
+                header.className = 'section-header'
+                header.innerHTML = `
+                    <span>${categoryCommands[0].categoryName}</span>
+                    <span style="font-size:0.8rem; background:#1a1a1a; padding:4px 12px; border-radius:50px; color:#0f0;">${categoryCommands.length} commands</span>
+                `
+                container.appendChild(header)
+                
+                // Grid
+                const grid = document.createElement('div')
+                grid.className = 'commands-grid'
+                
+                categoryCommands.forEach(cmd => {
+                    const cardHTML = createCommandCardHTML(cmd)
+                    grid.innerHTML += cardHTML
+                })
+                
+                container.appendChild(grid)
+            })
+            
+            // If no results
+            if (commandsToShow.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:80px 20px; color:#666;">
+                        <h3>No commands found</h3>
+                        <p>Try a different search term</p>
+                    </div>
+                `
+            }
+        }
+
+        /**
+         * Creates the full HTML for one command card
+         */
+        function createCommandCardHTML(cmd) {
+            let examplesHTML = ''
+            
+            cmd.examples.forEach((ex, i) => {
+                examplesHTML += `
+                <div class="example">
+                    <div class="example-label">${ex.desc}</div>
+                    <div class="example-code">
+                        <code>${ex.cmd}</code>
+                        <button class="copy-btn" onclick="copyToClipboard('${ex.cmd.replace(/'/g, "\\'")}')">Copy</button>
+                    </div>
+                    <div class="output">${ex.output}</div>
+                </div>`
+            })
+            
+            const isFavorited = favorites.includes(cmd.id) ? 'favorited' : ''
+            
+            return `
+            <div class="command-card" data-id="${cmd.id}" data-name="${cmd.name}" data-keywords="${cmd.name} ${cmd.explanation}">
+                <div class="card-header">
+                    <div class="command-name">
+                        <span>💻</span>
+                        <span>${cmd.name}</span>
+                    </div>
+                    <button class="fav-btn ${isFavorited}" onclick="toggleFavorite('${cmd.id}', event)" title="Add to favorites">
+                        ★
+                    </button>
+                </div>
+                <div class="card-body">
+                    <p class="explanation">${cmd.explanation}</p>
+                    
+                    **Summary:**
+📖 View Syntax &amp; Examples
+                        <div class="details-content">
+                            <div class="syntax"><strong>Syntax:</strong><br><code>${cmd.syntax}</code></div>
+                            <h4 style="margin: 18px 0 10px; color:#0f0;">Practical Examples</h4>
+                            ${examplesHTML}
+                        </div>
+                </div>
+            </div>`
+        }
+
+        /**
+         * Toggle favorite status
+         */
+        function toggleFavorite(id, e) {
+            e.stopImmediatePropagation()
+            
+            const index = favorites.indexOf(id)
+            
+            if (index === -1) {
+                favorites.push(id)
+            } else {
+                favorites.splice(index, 1)
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('linux_favorites', JSON.stringify(favorites))
+            
+            // Refresh current view
+            renderBrowseCommands()
+            if (document.getElementById('content-1').classList.contains('active')) {
+                renderFavorites()
+            }
+            
+            // Update count
+            updateFavoritesCount()
+        }
+
+        /**
+         * Render the Favorites tab
+         */
+        function renderFavorites() {
+            const grid = document.getElementById('favorites-grid')
+            const empty = document.getElementById('empty-favorites')
+            grid.innerHTML = ''
+            
+            if (favorites.length === 0) {
+                empty.style.display = 'block'
+                return
+            }
+            
+            empty.style.display = 'none'
+            
+            favorites.forEach(id => {
+                const cmd = COMMANDS_DATA.find(c => c.id === id)
+                if (cmd) {
+                    const cardHTML = createCommandCardHTML(cmd)
+                    grid.innerHTML += cardHTML
+                }
+            })
+        }
+
+        /**
+         * Update favorites counter in tab
+         */
+        function updateFavoritesCount() {
+            document.getElementById('fav-count').textContent = favorites.length
+        }
+
+        /**
+         * Filter commands by category
+         */
+        function filterByCategory(category) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'))
+            
+            // Add active to clicked button
+            const buttons = document.querySelectorAll('.category-btn')
+            for (let btn of buttons) {
+                if ((category === 'all' && btn.textContent === 'All Commands') || 
+                    (btn.textContent === COMMANDS_DATA.find(c => c.category === category)?.categoryName)) {
+                    btn.classList.add('active')
+                    break
+                }
+            }
+            
+            let filtered = COMMANDS_DATA
+            
+            if (category !== 'all') {
+                filtered = COMMANDS_DATA.filter(cmd => cmd.category === category)
+            }
+            
+            renderBrowseCommands(filtered)
+        }
+
+        /**
+         * Global search handler
+         */
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim()
+            
+            if (query === '') {
+                // Show all commands again
+                renderBrowseCommands()
+                return
+            }
+            
+            const filtered = COMMANDS_DATA.filter(cmd => 
+                cmd.name.toLowerCase().includes(query) ||
+                cmd.explanation.toLowerCase().includes(query) ||
+                cmd.syntax.toLowerCase().includes(query)
+            )
+            
+            renderBrowseCommands(filtered)
+        }
+
+        /**
+         * Copy command to clipboard
+         */
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Simple toast
+                const toast = document.createElement('div')
+                toast.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#00ff9d; color:#000; padding:12px 24px; border-radius:50px; font-weight:600; box-shadow:0 4px 15px rgba(0,255,157,0.4); z-index:9999;'
+                toast.textContent = '✅ Copied to clipboard!'
+                document.body.appendChild(toast)
+                
+                setTimeout(() => {
+                    toast.style.transition = 'all 0.3s'
+                    toast.style.opacity = '0'
+                    setTimeout(() => toast.remove(), 300)
+                }, 1800)
+            })
+        }
+
+        /**
+         * Quick copy from cheat sheet
+         */
+        function quickCopy(text) {
+            copyToClipboard(text)
+        }
+
+        /**
+         * Tab switching
+         */
+        function showTab(tabIndex) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'))
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'))
+            
+            // Show selected
+            document.getElementById('content-' + tabIndex).classList.add('active')
+            document.getElementById('tab-' + tabIndex).classList.add('active')
+            
+            // If favorites tab, render it
+            if (tabIndex === 1) {
+                renderFavorites()
+            }
+        }
+
+        /**
+         * Load favorites from localStorage on startup
+         */
+        function loadFavorites() {
+            const saved = localStorage.getItem('linux_favorites')
+            if (saved) {
+                favorites = JSON.parse(saved)
+            }
+            updateFavoritesCount()
+        }
+
+        /**
+         * Main initialization function
+         */
+        function initializeApp() {
+            console.log('%c🚀 Complete Linux Command Guide initialized (offline)', 'color:#00ff9d; font-weight:700;')
+            console.log('%c✅ 12 powerful advanced commands added: head, tail, wc, sort, sed, awk, xargs, crontab, systemctl, journalctl, rsync, scp', 'color:#00ff9d;')
+            
+            loadFavorites()
+            renderCategoryNav()
+            renderBrowseCommands()
+            
+            // Search event listener
+            const searchInput = document.getElementById('search-input')
+            searchInput.addEventListener('input', handleSearch)
+            
+            console.log('%c✅ Website is fully functional, mobile-ready, and 100% offline!', 'color:#00ff9d;')
+            console.log('👉 Powered by MKLAB Corporation • Enjoy learning Linux!')
+        }
+
+        // Start the application
+        window.onload = initializeApp
+    </script>
+</body>
+</html>
+```

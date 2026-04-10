@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Linux Command Guide | MKLAB</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0c10;
+      font-family: system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+      color: #eef4ff;
+      line-height: 1.5;
+      padding: 1rem;
+    }
+
+    /* main container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* header & branding */
+    .header {
+      text-align: center;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #2a2f3a;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #c0e0ff, #70b0ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      color: #8e9aaf;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+    .brand {
+      font-size: 0.85rem;
+      background: #1e222b;
+      display: inline-block;
+      padding: 0.2rem 0.9rem;
+      border-radius: 40px;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    /* cheat sheet summary (quick tips) */
+    .cheat-sheet {
+      background: #11161f;
+      border-left: 4px solid #3b82f6;
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .cheat-sheet p {
+      font-weight: 500;
+    }
+    .cheat-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .badge {
+      background: #1f2a3e;
+      padding: 0.25rem 0.8rem;
+      border-radius: 30px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #bbd7fb;
+    }
+
+    /* search & category row */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .search-box {
+      flex: 2;
+      min-width: 180px;
+    }
+    .search-box input {
+      width: 100%;
+      background: #1a1f28;
+      border: 1px solid #2d3440;
+      padding: 0.7rem 1rem;
+      border-radius: 60px;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+    .search-box input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+    }
+    .category-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: center;
+    }
+    .cat-btn {
+      background: #151b24;
+      border: none;
+      color: #cfdfed;
+      padding: 0.45rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-btn.active {
+      background: #2c3e66;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .cat-btn:hover {
+      background: #2a3342;
+    }
+
+    /* favorites section (extra) */
+    .favorites-section {
+      background: #0f131c;
+      border-radius: 28px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 2rem;
+      border: 1px solid #252c38;
+    }
+    .fav-header {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    .fav-header span {
+      font-size: 1.3rem;
+    }
+    .fav-commands {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 0.8rem;
+      padding-top: 0.4rem;
+    }
+    .fav-tag {
+      background: #2a2f3c;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+    .fav-tag:hover {
+      background: #3e4a60;
+    }
+
+    /* commands grid */
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    /* command card */
+    .cmd-card {
+      background: #11161e;
+      border-radius: 24px;
+      padding: 1.2rem;
+      border: 1px solid #232a34;
+      transition: 0.1s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .cmd-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+    .cmd-name {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffd966;
+      letter-spacing: -0.2px;
+    }
+    .fav-star {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6c7a8e;
+      transition: 0.1s;
+    }
+    .fav-star.active {
+      color: #f5b042;
+      text-shadow: 0 0 2px gold;
+    }
+    .cmd-desc {
+      color: #b9c7db;
+      font-size: 0.9rem;
+      margin: 0.5rem 0 0.6rem;
+    }
+    .syntax {
+      background: #0b0f16;
+      padding: 0.4rem 0.7rem;
+      border-radius: 12px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      margin: 0.6rem 0;
+      color: #b3e4c5;
+      word-break: break-word;
+    }
+    .example {
+      background: #0a0e14;
+      margin-top: 0.7rem;
+      padding: 0.6rem;
+      border-radius: 14px;
+      font-size: 0.8rem;
+    }
+    .example pre {
+      white-space: pre-wrap;
+      font-family: monospace;
+      background: #01010133;
+      padding: 0.3rem;
+      border-radius: 8px;
+      margin: 5px 0;
+      color: #cbd5e6;
+    }
+    .output-note {
+      font-size: 0.75rem;
+      color: #9aaec9;
+      margin-top: 4px;
+      font-style: italic;
+    }
+    hr {
+      border-color: #252e3a;
+      margin: 8px 0;
+    }
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 1.5rem 0.5rem;
+      border-top: 1px solid #202531;
+      color: #7a88a0;
+    }
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      background: #11161e;
+      border-radius: 28px;
+      grid-column: 1 / -1;
+    }
+    @media (max-width: 680px) {
+      body { padding: 0.8rem; }
+      .cmd-name { font-size: 1.1rem; }
+      .commands-grid { grid-template-columns: 1fr; }
+    }
+    button {
+      cursor: pointer;
+    }
+    .quick-tip-note {
+      background: #1e2a36;
+      border-radius: 16px;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🐧 Complete Linux Command Guide</h1>
+    <div class="sub">Master the terminal — from basics to advanced power tools</div>
+    <div class="brand">⚡ Powered by MKLAB Corporation</div>
+  </div>
+
+  <!-- Quick cheat sheet summary + tips -->
+  <div class="cheat-sheet">
+    <p>📘 <strong>Quick Cheatsheet</strong> — essentials:</p>
+    <div class="cheat-badges">
+      <span class="badge">ls -la</span>
+      <span class="badge">cd ~/</span>
+      <span class="badge">chmod 755</span>
+      <span class="badge">grep -r</span>
+      <span class="badge">ps aux</span>
+      <span class="badge">sudo apt install</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 Search commands, examples, syntax...">
+    </div>
+    <div class="category-nav" id="categoryFilter">
+      <button class="cat-btn active" data-cat="all">All</button>
+      <button class="cat-btn" data-cat="File Management">📁 File</button>
+      <button class="cat-btn" data-cat="Directory Navigation">📍 Navigation</button>
+      <button class="cat-btn" data-cat="System Information">🖥️ System</button>
+      <button class="cat-btn" data-cat="User Management">👤 Users</button>
+      <button class="cat-btn" data-cat="Permissions">🔐 Permissions</button>
+      <button class="cat-btn" data-cat="Networking">🌐 Networking</button>
+      <button class="cat-btn" data-cat="Process Management">⚙️ Processes</button>
+      <button class="cat-btn" data-cat="Package Management">📦 Packages</button>
+      <button class="cat-btn" data-cat="Disk Management">💾 Disk</button>
+      <button class="cat-btn" data-cat="Advanced/Special">🚀 Advanced</button>
+    </div>
+  </div>
+
+  <!-- FAVORITES section -->
+  <div class="favorites-section" id="favoritesSection">
+    <div class="fav-header" id="toggleFav">
+      <span>⭐</span> <span>Favorite Commands</span> <span style="font-size:0.8rem;">▼</span>
+    </div>
+    <div id="favListContainer" style="display: block;">
+      <div class="fav-commands" id="favCommandsList">
+        <!-- dynamic favorites appear here -->
+        <span style="color:#6a7c9b;">Click ★ on any command to add here</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- commands grid -->
+  <div id="commandsGrid" class="commands-grid"></div>
+
+  <!-- quick tips for beginners -->
+  <div class="quick-tip-note">
+    💡 <strong>Linux beginner tip:</strong> Use <code>man command</code> to read manual, <code>--help</code> for quick options. Tab completion saves time!
+  </div>
+  <footer>
+    <div>📖 Complete Linux Command Handbook — Offline Learning Tool</div>
+    <div>🏢 MKLAB Corporation • Open source style • Learn anywhere</div>
+  </footer>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // COMMANDS DATABASE (comprehensive, categorized, with examples)
+  // --------------------------------------------------------------
+  const commandsData = [
+    // File Management
+    { name: "ls", category: "File Management", desc: "List directory contents.", syntax: "ls [options] [path]", examples: ["ls -la   # detailed list including hidden files", "ls *.txt  # list all text files"], output: "Shows files/directories." },
+    { name: "cp", category: "File Management", desc: "Copy files or directories.", syntax: "cp source destination", examples: ["cp file1.txt backup/", "cp -r folder1 folder2  # recursive copy"], output: "Copies files/dirs." },
+    { name: "mv", category: "File Management", desc: "Move or rename files.", syntax: "mv old new", examples: ["mv data.txt archive/", "mv oldname.txt newname.txt"], output: "Moves/renames." },
+    { name: "rm", category: "File Management", desc: "Remove files/directories (careful!).", syntax: "rm [options] file", examples: ["rm temp.log", "rm -rf old_dir/  # force recursive"], output: "Deletes permanently." },
+    { name: "touch", category: "File Management", desc: "Create empty file or update timestamp.", syntax: "touch filename", examples: ["touch script.sh", "touch -t 202501011200 file"], output: "Creates/updates timestamp." },
+    // Directory Navigation
+    { name: "cd", category: "Directory Navigation", desc: "Change current directory.", syntax: "cd [directory]", examples: ["cd /var/log", "cd ~   # go home", "cd ..  # parent"], output: "Moves to target folder." },
+    { name: "pwd", category: "Directory Navigation", desc: "Print working directory.", syntax: "pwd", examples: ["pwd"], output: "/home/user/current" },
+    // System Information
+    { name: "uname", category: "System Information", desc: "Display system info.", syntax: "uname [options]", examples: ["uname -a", "uname -r"], output: "Kernel version, OS details." },
+    { name: "top", category: "System Information", desc: "Real-time process viewer.", syntax: "top", examples: ["top -u username"], output: "Dynamic process list." },
+    { name: "df", category: "System Information", desc: "Disk space usage.", syntax: "df -h", examples: ["df -h", "df -i"], output: "Filesystem usage." },
+    { name: "free", category: "System Information", desc: "Memory usage.", syntax: "free -m", examples: ["free -h"], output: "RAM and swap usage." },
+    // User Management
+    { name: "whoami", category: "User Management", desc: "Show current username.", syntax: "whoami", examples: ["whoami"], output: "current_user" },
+    { name: "useradd", category: "User Management", desc: "Create new user (root).", syntax: "sudo useradd username", examples: ["sudo useradd -m john"], output: "Creates user." },
+    { name: "passwd", category: "User Management", desc: "Change user password.", syntax: "passwd [username]", examples: ["passwd", "sudo passwd john"], output: "Password update prompt." },
+    // Permissions
+    { name: "chmod", category: "Permissions", desc: "Change file permissions.", syntax: "chmod mode file", examples: ["chmod 755 script.sh", "chmod u+x file"], output: "Updates permission bits." },
+    { name: "chown", category: "Permissions", desc: "Change file owner/group.", syntax: "chown user:group file", examples: ["chown john:staff data.txt"], output: "Ownership changed." },
+    // Networking
+    { name: "ping", category: "Networking", desc: "Test network connectivity.", syntax: "ping host", examples: ["ping google.com", "ping -c 4 8.8.8.8"], output: "ICMP echo replies." },
+    { name: "curl", category: "Networking", desc: "Transfer data from/to server.", syntax: "curl [options] URL", examples: ["curl ifconfig.me", "curl -O https://example.com/file.zip"], output: "Fetches content." },
+    { name: "netstat", category: "Networking", desc: "Network statistics.", syntax: "netstat -tulpn", examples: ["netstat -an"], output: "Open ports and connections." },
+    // Process Management
+    { name: "ps", category: "Process Management", desc: "Snapshot of processes.", syntax: "ps aux", examples: ["ps aux | grep python", "ps -ef"], output: "List of running processes." },
+    { name: "kill", category: "Process Management", desc: "Terminate process by PID.", syntax: "kill PID", examples: ["kill 1234", "kill -9 5678"], output: "Sends signal to process." },
+    { name: "jobs", category: "Process Management", desc: "List background jobs.", syntax: "jobs", examples: ["jobs -l"], output: "Job IDs and status." },
+    // Package Management (Debian/Ubuntu style)
+    { name: "apt", category: "Package Management", desc: "Advanced Package Tool (Debian).", syntax: "sudo apt [command]", examples: ["sudo apt update", "sudo apt install vim"], output: "Manages packages." },
+    { name: "dpkg", category: "Package Management", desc: "Debian package manager.", syntax: "dpkg -i package.deb", examples: ["dpkg -l"], output: "Install/list packages." },
+    // Disk Management
+    { name: "fdisk", category: "Disk Management", desc: "Partition table manipulator.", syntax: "sudo fdisk -l", examples: ["sudo fdisk /dev/sda"], output: "Disk partition info." },
+    { name: "mount", category: "Disk Management", desc: "Mount filesystem.", syntax: "mount device dir", examples: ["mount /dev/sdb1 /mnt"], output: "Mounts storage." },
+    { name: "du", category: "Disk Management", desc: "Estimate file space usage.", syntax: "du -sh *", examples: ["du -h --max-depth=1"], output: "Disk usage summary." },
+    // Advanced / Special commands
+    { name: "grep", category: "Advanced/Special", desc: "Search text using patterns.", syntax: "grep pattern file", examples: ["grep 'error' log.txt", "ps aux | grep ssh"], output: "Matching lines." },
+    { name: "awk", category: "Advanced/Special", desc: "Text processing language.", syntax: "awk '{print $1}' file", examples: ["awk -F: '{print $1}' /etc/passwd"], output: "Processed columns." },
+    { name: "sed", category: "Advanced/Special", desc: "Stream editor for filtering.", syntax: "sed 's/old/new/g' file", examples: ["sed -i 's/foo/bar/g' data.txt"], output: "Text substitution." },
+    { name: "rsync", category: "Advanced/Special", desc: "Fast remote file sync.", syntax: "rsync -av source dest", examples: ["rsync -avz /home/user/ user@remote:/backup"], output: "Synchronizes files." },
+    { name: "tcpdump", category: "Networking", desc: "Network packet analyzer.", syntax: "sudo tcpdump -i any", examples: ["tcpdump -n port 80"], output: "Packet capture." },
+    { name: "crontab", category: "Advanced/Special", desc: "Schedule periodic tasks.", syntax: "crontab -e", examples: ["crontab -l"], output: "Manages cron jobs." }
+  ];
+
+  // Helper to fill examples text & output
+  function enrichCommand(cmd) {
+    // already has fields, but ensure examples array + output string
+    if (!cmd.output) cmd.output = "See terminal output.";
+    if (!cmd.examples) cmd.examples = ["example command"];
+    return cmd;
+  }
+  const fullCommands = commandsData.map(c => enrichCommand(c));
+
+  // ---------- State ----------
+  let activeCategory = "all";
+  let searchQuery = "";
+  let favorites = new Set();   // store command names as fav
+
+  // load favorites from localStorage (offline persistence)
+  try {
+    const stored = localStorage.getItem("mklab_linux_favs");
+    if (stored) {
+      const arr = JSON.parse(stored);
+      arr.forEach(name => favorites.add(name));
+    }
+  } catch(e) {}
+
+  function saveFavorites() {
+    localStorage.setItem("mklab_linux_favs", JSON.stringify([...favorites]));
+  }
+
+  // Filtering logic
+  function filterCommands() {
+    return fullCommands.filter(cmd => {
+      const matchesCat = activeCategory === "all" || cmd.category === activeCategory;
+      const query = searchQuery.trim().toLowerCase();
+      let matchesSearch = true;
+      if (query) {
+        matchesSearch = cmd.name.toLowerCase().includes(query) ||
+                        cmd.desc.toLowerCase().includes(query) ||
+                        cmd.syntax.toLowerCase().includes(query) ||
+                        cmd.examples.some(ex => ex.toLowerCase().includes(query));
+      }
+      return matchesCat && matchesSearch;
+    });
+  }
+
+  // render commands grid + update favorites UI
+  function renderCommands() {
+    const filtered = filterCommands();
+    const grid = document.getElementById("commandsGrid");
+    if (filtered.length === 0) {
+      grid.innerHTML = `<div class="no-results">❌ No matching commands found. Try another search or category.</div>`;
+      return;
+    }
+    grid.innerHTML = filtered.map(cmd => {
+      const isFav = favorites.has(cmd.name);
+      return `
+        <div class="cmd-card" data-cmdname="${cmd.name}">
+          <div class="cmd-header">
+            <div class="cmd-name">${escapeHtml(cmd.name)}</div>
+            <button class="fav-star ${isFav ? 'active' : ''}" data-name="${cmd.name}">${isFav ? '★' : '☆'}</button>
+          </div>
+          <div class="cmd-desc">📌 ${escapeHtml(cmd.desc)}</div>
+          <div class="syntax">💻 ${escapeHtml(cmd.syntax)}</div>
+          <div class="example">
+            <strong>📋 Examples:</strong>
+            ${cmd.examples.map(ex => `<pre>${escapeHtml(ex)}</pre>`).join('')}
+            <div class="output-note">🔍 ${escapeHtml(cmd.output)}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // attach star event listeners after render
+    document.querySelectorAll('.fav-star').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cmdName = btn.getAttribute('data-name');
+        if (favorites.has(cmdName)) {
+          favorites.delete(cmdName);
+          btn.classList.remove('active');
+          btn.innerText = '☆';
+        } else {
+          favorites.add(cmdName);
+          btn.classList.add('active');
+          btn.innerText = '★';
+        }
+        saveFavorites();
+        renderFavoritesList();   // update sidebar favorites
+        renderCommands();        // re-render grid to sync star states
+      });
+    });
+  }
+
+  // render favorite tags list
+  function renderFavoritesList() {
+    const favContainer = document.getElementById("favCommandsList");
+    if (!favContainer) return;
+    if (favorites.size === 0) {
+      favContainer.innerHTML = `<span style="color:#6a7c9b;">⭐ Click ★ on any command to add favorites</span>`;
+      return;
+    }
+    const favArray = Array.from(favorites);
+    favContainer.innerHTML = favArray.map(name => {
+      const cmd = fullCommands.find(c => c.name === name);
+      return `<span class="fav-tag" data-favname="${name}">${escapeHtml(name)}</span>`;
+    }).join('');
+    // attach click to filter by fav command name
+    document.querySelectorAll('.fav-tag').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const fname = tag.getAttribute('data-favname');
+        if (fname) {
+          searchInput.value = fname;
+          searchQuery = fname;
+          activeCategory = "all";
+          highlightActiveCat("all");
+          renderCommands();
+          renderFavoritesList();
+        }
+      });
+    });
+  }
+
+  function highlightActiveCat(cat) {
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      if (btn.getAttribute('data-cat') === cat) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+  }
+
+  // category listeners
+  function initCategoryEvents() {
+    const btns = document.querySelectorAll('.cat-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-cat');
+        activeCategory = cat;
+        searchQuery = document.getElementById("searchInput").value.trim();
+        highlightActiveCat(cat);
+        renderCommands();
+      });
+    });
+  }
+
+  // search event
+  const searchInput = document.getElementById("searchInput");
+  function setupSearch() {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderCommands();
+    });
+  }
+
+  // Toggle favorites section visibility
+  let favVisible = true;
+  const favContainerDiv = document.getElementById("favListContainer");
+  const toggleFavBtn = document.getElementById("toggleFav");
+  if (toggleFavBtn) {
+    toggleFavBtn.addEventListener('click', () => {
+      favVisible = !favVisible;
+      favContainerDiv.style.display = favVisible ? "block" : "none";
+    });
+  }
+
+  // initial render and sync
+  function init() {
+    initCategoryEvents();
+    setupSearch();
+    renderCommands();
+    renderFavoritesList();
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+      return c;
+    });
+  }
+
+  // add a little extra: command examples collapsible not required but all good.
+  init();
+</script>
+</body>
+</html>
